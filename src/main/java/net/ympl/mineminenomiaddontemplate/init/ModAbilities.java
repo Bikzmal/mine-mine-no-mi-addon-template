@@ -11,19 +11,19 @@ import java.util.Objects;
 
 public class ModAbilities {
     public static void register() {
-        addonRegisterAbilities(new AbilityCore[]{ExampleAbility.INSTANCE});
+        registerAbilities(new AbilityCore[]{ExampleAbility.INSTANCE});
     }
 
-    private static <T extends AkumaNoMiItem> T addonRegisterFruit(T fruit) {
+    private static <T extends AkumaNoMiItem> T registerFruit(T fruit) {
         String resourceName = WyHelper.getResourceName(fruit.getDevilFruitName());
         WyRegistry.getLangMap().put("item.mineminenomi." + resourceName, fruit.getDevilFruitName());
         WyRegistry.registerItem(fruit.getDevilFruitName(), () -> fruit);
         if (fruit.getAbilities() != null && (fruit.getAbilities()).length > 0)
-            addonRegisterAbilities(fruit.getAbilities());
+            registerAbilities(fruit.getAbilities());
         return fruit;
     }
 
-    private static void addonRegisterAbilities(AbilityCore[] abilities) {
-        Arrays.<AbilityCore>stream(abilities).filter(Objects::nonNull).forEach(abl -> WyRegistry.registerAbility(abl));
+    private static void registerAbilities(AbilityCore[] abilities) {
+        Arrays.stream(abilities).filter(Objects::nonNull).forEach(WyRegistry::registerAbility);
     }
 }
